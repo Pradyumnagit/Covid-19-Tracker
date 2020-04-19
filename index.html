@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Covid-19 Tracker | India</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+$(document).ready(function(){
+    $.ajax({
+      url: "https://api.covid19india.org/data.json",
+      type: "GET",
+      success: function(result){
+        console.log(result);
+
+        //var state=result.statewise[0].active;
+        var state_data=result.statewise.length;
+        console.log(state_data);
+        var str='';
+        var temp='duydun';
+        for (var i = 1; i < state_data; i++) {
+          //array[i]
+          var a=result.statewise[i].active;
+          var b=result.statewise[i].recovered;
+          var c=result.statewise[i].deaths;
+          var d=parseInt(a)+parseInt(b)+parseInt(c);
+          //console.log(typeof d);
+          console.log(a);
+          console.log(b);
+          console.log(c);
+          console.log(d);
+          str+="<tr><th scope="+"row>"+result.statewise[i].state+"</th><td>"+a+"</td><td>"+b+"</td><td>"+c+"</td><td>"+d+"</td></tr>";
+          a=0,b=0,c=0,d=0;
+
+        }
+        console.log(str);
+        var day=result.cases_time_series.length;
+        console.log(day);
+        var about=result.cases_time_series[day-1].totalconfirmed;
+        var test=result.tested[0].source;
+
+        console.log('success++++');
+
+      $("#totalconfirmed").html(result.cases_time_series[day-1].totalconfirmed);
+      $("#totalrecovered").html(result.cases_time_series[day-1].totalrecovered);
+      $("#totaldeceased").html(result.cases_time_series[day-1].totaldeceased);
+      $("#date1").html('Last UpdatedOn: '+result.cases_time_series[day-1].date);
+      $("#date2").html('Last UpdatedOn: '+result.cases_time_series[day-1].date);
+      $("#date3").html('Last UpdatedOn: '+result.cases_time_series[day-1].date);
+      $("#totalsamplestested").html(result.tested[result.tested.length-1].totalsamplestested);
+      $("#totalpositivecases").html(result.tested[result.tested.length-1].totalpositivecases);
+      $("#totalindividualstested").html(result.tested[result.tested.length-1].totalpositivecases);
+      $("#statewisedata").html(str);
+
+    },error: function(result){
+      //console.log(result);
+      console.log('Error-----');
+    }
+  });
+
+});
+</script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+
+</div>
+
+      <div class="row">
+    <div class="col-sm-4">
+      <div class="card text-center">
+      <div class="card-header">
+      Total confirmed
+      <div class="spinner-grow text-warning" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+      </div>
+      <div class="card-body">
+      <h5 class="card-title" id="totalconfirmed"></h5>
+
+      </div>
+      <div class="card-footer text-muted bg-warning" id="date1">
+      </div>
+      </div>
+
+    </div>
+    <div class="col-sm-4" >
+      <div class="card text-center">
+      <div class="card-header">
+      Total Recovered
+      <div class="spinner-grow text-success" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+      </div>
+
+
+      <div class="card-body">
+      <h5 class="card-title" id="totalrecovered"></h5>
+
+
+      </div>
+      <div class="card-footer text-muted bg-success" id="date2">
+
+      </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card text-center">
+      <div class="card-header">
+      Total Deceased
+      <div class="spinner-grow text-danger" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+      </div>
+
+
+      <div class="card-body">
+      <h5 class="card-title" id="totaldeceased"></h5>
+
+      </div>
+      <div class="card-footer text-muted bg-danger" id="date3">
+
+      </div>
+      </div>
+    </div>
+
+  </div>
+
+
+    <div class='row'>
+      <div class="col-sm-12">
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">State</th>
+            <th scope="col">Active</th>
+            <th scope="col">Recovered</th>
+            <th scope="col">Deceased</th>
+            <th scope="col">Total</th>
+
+          </tr>
+        </thead>
+        <tbody id="statewisedata">
+
+
+        </tbody>
+      </table>
+    </div>
+    </div>
+
+
+<div class="row" style="align: center ">
+  <div class="col-sm-4">
+    <ul class="list-group">
+      <li class="list-group-item align-items-center">
+        Individual Tested
+        <span class="badge badge-primary badge-pill" id="totalindividualstested"></span>
+      </li>
+<li class="list-group-item   align-items-center">
+  Sample Tested
+  <span class="badge badge-primary badge-pill" id="totalsamplestested"></span>
+</li>
+<li class="list-group-item align-items-center">
+  Positive Cases
+  <span class="badge badge-primary badge-pill" id="totalpositivecases"></span>
+</li>
+
+</ul>
+  </div>
+
+  </div>
+
+
+  <footer class="footer">
+  <div class="footer-copyright text-center py-3">© 2020 Copyright Covid-19 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Developed By:
+    <a href="https://about.me/pradyumnadas"> Pradyumna Das</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+
+</div>
+
+  </body>
+</html>
