@@ -2,12 +2,52 @@
 <html lang="en">
   <head>
     <title>Covid-19 Tracker | India</title>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel = "icon" href =
+    "https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/rm206-jj-01a.png?w=800&dpr=1&fit=default&crop=default&auto=null&fm=png&q=75&vib=3&con=3&usm=15&bg=transparent&ixlib=js-2.2.1&s=0211d7f047933e58b5ce6c591695b73e"
+        type = "image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+ <style>
+ .fa {
+   padding: 10px;
+   font-size: 20px;
+   width: 30px;
+   text-align: center;
+   text-decoration: none;
+   margin: 5px 2px;
+ }
+
+ .fa:hover {
+     opacity: 0.7;
+ }
+
+ .fa-facebook {
+   background: #3B5998;
+   color: white;
+ }
+
+ .fa-twitter {
+   background: #55ACEE;
+   color: white;
+ }
+
+
+ .fa-linkedin {
+   background: #007bb5;
+   color: white;
+ }
+
+ </style>
+
+
+
+
     <script>
 $(document).ready(function(){
     $.ajax({
@@ -44,7 +84,7 @@ $(document).ready(function(){
 
         console.log('success++++');
 
-      $("#totalconfirmed").html(result.cases_time_series[day-1].totalconfirmed);
+      $("#totalactive").html(parseInt(result.cases_time_series[day-1].totalconfirmed)-(parseInt(result.cases_time_series[day-1].totalrecovered)+parseInt(result.cases_time_series[day-1].totaldeceased)));
       $("#totalrecovered").html(result.cases_time_series[day-1].totalrecovered);
       $("#totaldeceased").html(result.cases_time_series[day-1].totaldeceased);
       $("#date1").html('Last UpdatedOn: '+result.cases_time_series[day-1].date);
@@ -52,8 +92,9 @@ $(document).ready(function(){
       $("#date3").html('Last UpdatedOn: '+result.cases_time_series[day-1].date);
       $("#totalsamplestested").html(result.tested[result.tested.length-1].totalsamplestested);
       $("#totalpositivecases").html(result.tested[result.tested.length-1].totalpositivecases);
-      $("#totalindividualstested").html(result.tested[result.tested.length-1].totalpositivecases);
+      //$("#totalindividualstested").html(result.tested[result.tested.length-1].totalpositivecases);
       $("#statewisedata").html(str);
+      //$("#lastupdate").html('Last Updated on'+result.cases_time_series[day-1].date);
 
     },error: function(result){
       //console.log(result);
@@ -64,9 +105,40 @@ $(document).ready(function(){
 });
 </script>
   </head>
-  <body>
+  <body><br>
     <div class="container">
       <div class="row">
+<div class="col-sm-12">
+  <div class="header">
+    <div class="row">
+      <div class="col-sm-3">
+        <img src="https://www.icm-mhi.org/sites/default/files/images/COVID19/covid19.png" height="100px" width="100px">
+      </div>
+    <div class="col-sm-6">
+      <br>
+    </div>
+    <div class="col-sm-3">
+      <ul class="list-group">
+
+  <li class="list-group-item   align-items-center">
+    Sample Tested
+    <span class="badge badge-primary badge-pill" id="totalsamplestested"></span>
+  </li>
+  <li class="list-group-item align-items-center">
+    Positive Cases
+    <span class="badge badge-primary badge-pill" id="totalpositivecases"></span>
+  </li>
+
+  </ul>
+    </div>
+  </div>
+  <hr>
+    <div class="row"><div class="col-sm-3"></div></div>
+
+
+</div>
+</div>
+
 
 </div>
 
@@ -74,16 +146,16 @@ $(document).ready(function(){
     <div class="col-sm-4">
       <div class="card text-center">
       <div class="card-header">
-      Total confirmed
+      Active
       <div class="spinner-grow text-warning" role="status">
   <span class="sr-only">Loading...</span>
 </div>
       </div>
       <div class="card-body">
-      <h5 class="card-title" id="totalconfirmed"></h5>
+      <h5 class="card-title" id="totalactive"></h5>
 
       </div>
-      <div class="card-footer text-muted bg-warning" id="date1">
+      <div class="card-footer text-black bg-warning" id="date1">
       </div>
       </div>
 
@@ -91,7 +163,7 @@ $(document).ready(function(){
     <div class="col-sm-4" >
       <div class="card text-center">
       <div class="card-header">
-      Total Recovered
+      Recovered
       <div class="spinner-grow text-success" role="status">
   <span class="sr-only">Loading...</span>
 </div>
@@ -103,7 +175,7 @@ $(document).ready(function(){
 
 
       </div>
-      <div class="card-footer text-muted bg-success" id="date2">
+      <div class="card-footer text-black bg-success" id="date2">
 
       </div>
       </div>
@@ -111,7 +183,7 @@ $(document).ready(function(){
     <div class="col-sm-4">
       <div class="card text-center">
       <div class="card-header">
-      Total Deceased
+       Deceased
       <div class="spinner-grow text-danger" role="status">
   <span class="sr-only">Loading...</span>
 </div>
@@ -122,13 +194,13 @@ $(document).ready(function(){
       <h5 class="card-title" id="totaldeceased"></h5>
 
       </div>
-      <div class="card-footer text-muted bg-danger" id="date3">
+      <div class="card-footer text-black bg-danger" id="date3">
 
       </div>
       </div>
     </div>
 
-  </div>
+  </div><br><br>
 
 
     <div class='row'>
@@ -155,30 +227,26 @@ $(document).ready(function(){
 
 
 <div class="row" style="align: center ">
-  <div class="col-sm-4">
-    <ul class="list-group">
-      <li class="list-group-item align-items-center">
-        Individual Tested
-        <span class="badge badge-primary badge-pill" id="totalindividualstested"></span>
-      </li>
-<li class="list-group-item   align-items-center">
-  Sample Tested
-  <span class="badge badge-primary badge-pill" id="totalsamplestested"></span>
-</li>
-<li class="list-group-item align-items-center">
-  Positive Cases
-  <span class="badge badge-primary badge-pill" id="totalpositivecases"></span>
-</li>
 
-</ul>
-  </div>
 
   </div>
 
-
+<br>
   <footer class="footer">
-  <div class="footer-copyright text-center py-3">© 2020 Copyright Covid-19 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Developed By:
-    <a href="https://about.me/pradyumnadas"> Pradyumna Das</a>
+  <div class="footer-copyright text-center py-3">
+
+    <div class="row">
+      <div class="col-sm-12">© 2020 Copyright Covid-19</div>
+    </div>
+    <div class="row">
+      <div class='col-sm-12'>
+        Developed By:<a href="https://about.me/pradyumnadas">Pradyumna Das</a>&nbsp;&nbsp;&nbsp;<a href="https://www.facebook.com/pradumna.das.33" class="fa fa-facebook"></a><a href="https://twitter.com/pradyum32631912" class="fa fa-twitter"></a><a href="https://www.linkedin.com/in/pradyumna-das/" class="fa fa-linkedin"></a>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-12">Data Source: <a href="https://icmr.nic.in/">ICMR</a></div>
+    </div>
   </div>
   <!-- Copyright -->
 </footer>
