@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ <script src="https://cdnjs.com/libraries/Chart.js"></script>
+ <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
 
  <style>
  .fa {
@@ -45,59 +49,41 @@
 
  </style>
 
-
-
-
     <script>
 $(document).ready(function(){
     $.ajax({
       url: "https://api.covid19india.org/data.json",
       type: "GET",
       success: function(result){
-        console.log(result);
 
-        //var state=result.statewise[0].active;
         var state_data=result.statewise.length;
-        console.log(state_data);
         var str='';
-        var temp='duydun';
+      //  var arr_date= [];//{ x: new Date(2014, 00, 01), y: 850 },{ x: new Date(2014, 01, 01), y: 889 },{ x: new Date(2014, 02, 01), y: 890 },{ x: new Date(2014, 03, 01), y: 899 };
+
         for (var i = 1; i < state_data; i++) {
-          //array[i]
           var a=result.statewise[i].active;
           var b=result.statewise[i].recovered;
           var c=result.statewise[i].deaths;
           var d=parseInt(a)+parseInt(b)+parseInt(c);
-          //console.log(typeof d);
-          console.log(a);
-          console.log(b);
-          console.log(c);
-          console.log(d);
+
           str+="<tr><th scope="+"row>"+result.statewise[i].state+"</th><td>"+a+"</td><td>"+b+"</td><td>"+c+"</td><td>"+d+"</td></tr>";
-          a=0,b=0,c=0,d=0;
 
         }
-        console.log(str);
         var day=result.cases_time_series.length;
-        console.log(day);
         var about=result.cases_time_series[day-1].totalconfirmed;
         var test=result.tested[0].source;
 
-        console.log('success++++');
-
-      $("#totalactive").html(parseInt(result.cases_time_series[day-1].totalconfirmed)-(parseInt(result.cases_time_series[day-1].totalrecovered)+parseInt(result.cases_time_series[day-1].totaldeceased)));
-      $("#totalrecovered").html(result.cases_time_series[day-1].totalrecovered);
-      $("#totaldeceased").html(result.cases_time_series[day-1].totaldeceased);
-      $("#date1").html('Last UpdatedOn: '+result.cases_time_series[day-1].date);
-      $("#date2").html('Last UpdatedOn: '+result.cases_time_series[day-1].date);
-      $("#date3").html('Last UpdatedOn: '+result.cases_time_series[day-1].date);
+      $("#totalactive").html(result.statewise[0].active);
+      $("#totalrecovered").html(result.statewise[0].recovered);
+      $("#totaldeceased").html(result.statewise[0].deaths);
+      $("#date1").html('Last UpdatedOn: '+result.statewise[0].lastupdatedtime);
+      $("#date2").html('Last UpdatedOn: '+result.statewise[0].lastupdatedtime);
+      $("#date3").html('Last UpdatedOn: '+result.statewise[0].lastupdatedtime);
       $("#totalsamplestested").html(result.tested[result.tested.length-1].totalsamplestested);
       $("#totalpositivecases").html(result.tested[result.tested.length-1].totalpositivecases);
-      //$("#totalindividualstested").html(result.tested[result.tested.length-1].totalpositivecases);
       $("#statewisedata").html(str);
-      //$("#lastupdate").html('Last Updated on'+result.cases_time_series[day-1].date);
 
     },error: function(result){
-      //console.log(result);
       console.log('Error-----');
     }
   });
@@ -106,6 +92,9 @@ $(document).ready(function(){
 </script>
   </head>
   <body><br>
+    <div class="alert alert-dark" role="alert" style="text-align: center ">
+      Stay Home Stay Safe
+</div>
     <div class="container">
       <div class="row">
 <div class="col-sm-12">
@@ -121,11 +110,11 @@ $(document).ready(function(){
       <ul class="list-group">
 
   <li class="list-group-item   align-items-center">
-    Sample Tested
+    Sample Tested &nbsp;&nbsp;&nbsp;
     <span class="badge badge-primary badge-pill" id="totalsamplestested"></span>
   </li>
   <li class="list-group-item align-items-center">
-    Positive Cases
+    Positive Cases &nbsp;&nbsp;&nbsp;
     <span class="badge badge-primary badge-pill" id="totalpositivecases"></span>
   </li>
 
@@ -138,7 +127,6 @@ $(document).ready(function(){
 
 </div>
 </div>
-
 
 </div>
 
@@ -218,17 +206,18 @@ $(document).ready(function(){
           </tr>
         </thead>
         <tbody id="statewisedata">
-
-
         </tbody>
       </table>
     </div>
     </div>
 
-
 <div class="row" style="align: center ">
 
 
+  </div>
+  <div class="row">
+  <div class="col-sm-6" id="chartContainer" >
+    </div>
   </div>
 
 <br>
@@ -240,7 +229,7 @@ $(document).ready(function(){
     </div>
     <div class="row">
       <div class='col-sm-12'>
-        Developed By:<a href="https://about.me/pradyumnadas">Pradyumna Das</a>&nbsp;&nbsp;&nbsp;<a href="https://www.facebook.com/pradumna.das.33" class="fa fa-facebook"></a><a href="https://twitter.com/pradyum32631912" class="fa fa-twitter"></a><a href="https://www.linkedin.com/in/pradyumna-das/" class="fa fa-linkedin"></a>
+        Developed By:<a href="https://about.me/pradyumnadas">&nbsp;Pradyumna Das</a>&nbsp;&nbsp;&nbsp;<a href="https://www.facebook.com/pradumna.das.33" class="fa fa-facebook"></a><a href="https://twitter.com/pradyum32631912" class="fa fa-twitter"></a><a href="https://www.linkedin.com/in/pradyumna-das/" class="fa fa-linkedin"></a>
       </div>
 
     </div>
@@ -248,7 +237,6 @@ $(document).ready(function(){
       <div class="col-sm-12">Data Source: <a href="https://icmr.nic.in/">ICMR</a></div>
     </div>
   </div>
-  <!-- Copyright -->
 </footer>
 
 </div>
