@@ -82,6 +82,7 @@ $(document).ready(function(){
       $("#totalsamplestested").html(result.tested[result.tested.length-1].totalsamplestested);
       $("#totalpositivecases").html(result.tested[result.tested.length-1].totalpositivecases);
       $("#statewisedata").html(str);
+      $("#total").html('Total Cases: '+result.statewise[0].confirmed);
 
     },error: function(result){
       console.log('Error-----');
@@ -92,8 +93,16 @@ $(document).ready(function(){
 </script>
   </head>
   <body><br>
-    <div class="alert alert-dark" role="alert" style="text-align: center ">
-      Stay Home Stay Safe
+    <div class="alert alert-dark" role="alert">
+      <div class="row" style="text-align: center ">
+        <div class="col-sm-10">
+          Stay Home Stay Safe
+        </div>
+        <div class="col-sm-2" id="total">
+
+        </div>
+
+      </div>
 </div>
     <div class="container">
       <div class="row">
