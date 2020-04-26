@@ -83,6 +83,8 @@ $(document).ready(function(){
       $("#totalpositivecases").html(result.tested[result.tested.length-1].totalpositivecases);
       $("#statewisedata").html(str);
       $("#total").html('Total Cases: '+result.statewise[0].confirmed);
+      var link=result.tested[result.tested.length-1].source;
+      $("#link").html('<a href="'+link+'" target="_blank">ICMR Latest Update PDF</a>');
 
     },error: function(result){
       console.log('Error-----');
@@ -92,19 +94,45 @@ $(document).ready(function(){
 });
 </script>
   </head>
-  <body><br>
-    <div class="alert alert-dark" role="alert">
-      <div class="row" style="text-align: center ">
-        <div class="col-sm-10">
-          <b>Stay Home Stay Safe</b>
-        </div>
-        <div class="col-sm-2" id="total">
+  <body>
+      <br>
+        <div class="alert alert-dark" role="alert">
+          <div class="row" style="text-align: center ">
+            <div class="col-sm-10">
+              <b>Stay Home Stay Safe</b>
+            </div>
+            <div class="col-sm-2" id="total">
 
-        </div>
+            </div>
 
+          </div>
       </div>
-</div>
     <div class="container">
+      <div class="alert alert-dark" role="alert">
+		<div class="row">
+			<div class="col-sm-4">
+				<strong>Helpline Number :</strong>+91-11-23978046
+			</div>
+			<div class="col-sm-4">
+				<strong>Toll Free :</strong> 1075
+			</div>
+			<div class="col-sm-4">
+				<strong>Helpline Email ID :</strong> <a href="mailto:ncov2019@gov.in">ncov2019@gov.in </a>
+			</div>
+  </div>
+<div class=row>
+			<div class="col-sm-4 site-meta">
+				<strong> <a href="https://www.mohfw.gov.in/pdf/coronvavirushelplinenumber.pdf" target="_blank">States &amp; Union Territories (View pdf)</a></strong>
+			</div>
+			<div class="col-sm-4 site-meta">
+				<strong>Arogya Setu <img src="https://www.mohfw.gov.in/pdf/arogya.png"> App  <a href="http://bit.ly/AarogyaSetu_PS" target="_BLANK" title="For Android"><img src="https://www.mohfw.gov.in/pdf/android.png"></a></strong> <a href="https://apple.co/2X1KMzO" target="_BLANK" title="For iPhone"><img src="https://www.mohfw.gov.in/pdf/apple.png"></a>
+			</div>
+      <div class="col-sm-4 site-meta">
+				<strong id="link"> </strong>
+			</div>
+
+</div>
+		</div>
       <div class="row">
 <div class="col-sm-12">
   <div class="header">
@@ -234,7 +262,7 @@ $(document).ready(function(){
   <div class="footer-copyright text-center py-3">
 
     <div class="row">
-      <div class="col-sm-12">© 2020 Copyright ChineseCovid</div>
+      <div class="col-sm-12">© 2020 Copyright Covid-19</div>
     </div>
     <div class="row">
       <div class='col-sm-12'>
@@ -243,7 +271,7 @@ $(document).ready(function(){
 
     </div>
     <div class="row">
-      <div class="col-sm-12">Data Source: <a href="https://icmr.nic.in/">ICMR</a></div>
+      <div class="col-sm-12">Data Source: <a href="https://icmr.nic.in/">ICMR</a> & <a href="https://www.mohfw.gov.in/">Arogya Setu</a></div>
     </div>
   </div>
 </footer>
